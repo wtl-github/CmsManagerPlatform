@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <style>
+        body{
+            padding:10px;
+        }
+        .layui-form-label{
+            width: 100px;
+        }
+        .layui-table td,.layui-table th{
+            text-align: center;
+        }
+        .layui-laypage button{
+            background-color: #009688;
+            color: #ffffff;
+        }
+        .layui-laypage a, .layui-laypage span{
+            background-color: transparent;
+        }
+          #add{
+              float: right;
+              margin-top: 8px;
+          }
+    </style>
+</head>
+<body>
+<blockquote class="layui-elem-quote">
+    <form class="layui-form " action="">
+        <div class="layui-inline">
+            <label class="layui-form-label">查找关键字：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="title"  autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-normal">搜索</button>
+            </div>
+        </div>
+    </form>
+</blockquote>
+<div class="inform" style="height: 480px;overflow: auto">
+    <table class="layui-table" >
+        <colgroup>
+            <col width="100">
+            <!--<col width="200">-->
+            <!--<col>-->
+        </colgroup>
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>标题</th>
+            <th>类型</th>
+            <th>状态</th>
+            <th>地址</th>
+            <th>权限编码</th>
+            <th>描述</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="container">
+        </tbody>
+    </table>
+</div>
+
+
+    <button id="add" type="button" class="layui-btn layui-btn-small" data-type="add">
+        <i class="layui-icon">&#xe608;</i> 新增</button>
+    <div id="demo"></div>
+
+<script src="layui/layui.js"></script>
+<script>
+    layui.use(['layer','form','upload','element','laypage'],function(){
+        var layer = layui.layer
+                ,form=layui.form()
+                ,laypage=layui.laypage
+                ,element=layui.element()
+                ,$=layui.jquery;
+        var inform=[{'id':'1','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'2','title':'用户管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'3','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'4','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'5','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'6','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'用户管理'},
+            {'id':'7','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'3000','disc':'权限管理'},
+            {'id':'8','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'9','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2060','disc':'权限管理'},
+            {'id':'10','title':'权限管理','type':'3','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'11','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'12','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2080','disc':'权限管理'},
+            {'id':'13','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'14','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'15','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'16','title':'权限管理','type':'5','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'17','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'功能管理'},
+            {'id':'18','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'19','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'20','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'21','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'4000','disc':'权限管理'},
+            {'id':'22','title':'权限管理','type':'1','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'23','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'发送邮件测试'},
+            {'id':'24','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'25','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'1000','disc':'权限管理'},
+            {'id':'26','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'27','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'28','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2025','disc':'权限管理'},
+            {'id':'29','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'操作日志'},
+            {'id':'30','title':'权限管理','type':'1','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'31','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'32','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'33','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'34','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'35','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2060','disc':'权限管理'},
+            {'id':'36','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'37','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'系统监控'},
+            {'id':'38','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'39','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'40','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'用户管理'},
+            {'id':'41','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'42','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'43','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'44','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'45','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'46','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'47','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'},
+            {'id':'48','title':'权限管理','type':'0','state':'0','addr':'/perm/','code':'2000','disc':'权限管理'}
+        ];
+        function method() {
+            var nums = 10; //每页出现的数据量
+            var totalpages = Math.ceil(inform.length / nums);
+            var render = function (curr) {
+                var str = '', last = curr * nums - 1;
+                last = last >= inform.length ? (inform.length - 1) : last;
+                $('.layui-laypage .layui-laypage-total input').attr('max', totalpages);
+                for (var i = (curr * nums - nums); i <= last; i++) {
+                    str += '<tr><td>' + inform[i].id + '</td><td>' + inform[i].title + '</td><td>' + inform[i].type + '</td><td>' + inform[i].state
+                            + '</td><td>' + inform[i].addr + '</td><td>' + inform[i].code + '</td><td>' + inform[i].disc + '</td><td>'
+                            + '<div class="layui-btn-group"><button class="layui-btn layui-btn-mini" data-type="see">'
+                            + '<i class="layui-icon">&#xe60e;</i>查看</button>'
+                            + '<button class="layui-btn layui-btn-mini  layui-btn-normal" data-type="edit">'
+                            + '<i class="layui-icon">&#xe642;</i>编辑</button>'
+                            + '<button class="layui-btn layui-btn-mini layui-btn-danger" data-type="delete">'
+                            + '<i class="layui-icon">&#xe640;</i>删除</button></div></td></tr>';
+                    $('.layui-table tbody').append(str);
+                }
+                return str;
+            };
+            //调用分页
+            laypage({
+                cont: 'demo', pages: totalpages//得到总页数
+                , skip: true, groups: 3, first: 1, last: totalpages, prev: '<em><</em>', next: '<em>></em>', jump: function (obj) {
+                    document.getElementById('container').innerHTML = render(obj.curr);
+                }
+            });
+            var action={
+            see:function(){
+               var tr=$(this).parent().parent().parent();
+                layer.open({
+                    type:1,
+                    title:['查看','color:#fff;font-size:20px'],
+                    area:'510px',
+                    skin:'layui-layer-molv',
+                    shade:[0.6,'#FFF'],
+                    content:'<div style="padding:15px">'
+                            +'<table class="layui-table">'
+                            +'<tr><td>ID</td><td>'+tr.find('td:first-child').text()+'</td></tr>'
+                            +'<tr><td>标题</td><td>'+tr.find('td:nth-child(2)').text()+'</td></tr>'
+                            +'<tr><td>类型</td><td>'+tr.find('td:nth-child(3)').text()+'</td></tr>'
+                            +'<tr><td>状态</td><td>'+tr.find('td:nth-child(4)').text()+'</td></tr>'
+                            +'<tr><td>地址</td><td>'+tr.find('td:nth-child(5)').text()+'</td></tr>'
+                            +'<tr><td>权限编码</td><td>'+tr.find('td:nth-child(6)').text()+'</td></tr>'
+                            +'<tr><td>描述</td><td>'+tr.find('td:nth-child(7)').text()+'</td></tr>'
+                            +'</table></div>',
+                    btn:['返回'],
+                    btnAlign:'c'
+                });
+            },
+            edit:function(){
+               var tr=$(this).parent().parent().parent();
+                var str='<div style="padding:15px">'
+                        +'<form class="layui-form" action="">'
+                        +'<table class="layui-table"><colgroup><col width="100"><col><col width="100"></colgroup>'
+                        +'<tr><td>ID</td><td><input class="layui-input" readonly="true" type="text" name="id" value="'+tr.find("td:first-child").text()+'"/></td>'
+                        +'<td>标题</td><td><input class="layui-input" type="text" name="title" value="'+tr.find("td:nth-child(2)").text()+'"/></td></tr>'
+                        +'<tr><td>类型</td><td><input class="layui-input" type="text" name="type" value="'+tr.find("td:nth-child(3)").text()+'"/></td>'
+                        +'<td>状态</td><td><input class="layui-input" readonly="true" type="text" name="state" value="'+tr.find("td:nth-child(4)").text()+'"/></td></tr>'
+                        +'<tr><td>地址</td><td><input class="layui-input"  type="text" name="address" value="'+tr.find("td:nth-child(5)").text()+'"/></td>'
+                        +'<td>权限编码</td><td><input class="layui-input" readonly="true" type="text" name="code" value="'+tr.find("td:nth-child(6)").text()+'"/></td></tr>'
+                        +'<tr><td >描述</td><td colspan="3"><input class="layui-input" type="text" name="disc" value="'+tr.find("td:nth-child(7)").text()+'"/></td></tr>'
+                        +'<tr><td colspan="4"><button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">提交</button><button type="button" onclick="layer.closeAll()" class="layui-btn layui-btn-primary">关闭</a></td></tr>'
+                        +'</table></form></div>';
+                layer.open({
+                    type:1,
+                    title:['编辑修改','color:#fff;font-size:20px'],
+                    shade:[0.6,'#FFF'],
+                    skin:'layui-layer-lan',
+                    area:'610px',
+                    content:str
+                    })
+                form.on('submit(formDemo)', function(data){
+                    layer.msg(JSON.stringify(data.field));
+                    return false;
+                });
+            },
+            delete:function(){
+                var tr=$(this).parent().parent().parent();
+                var index=tr.index();
+                layer.open({
+                    title:'提示',
+                    shade:[0.6,'#FFF'],
+                    content:'确认要删除ID为'+tr.find("td:first-child").text()+'的记录吗？',
+                    btn:['确认','取消'],
+                    yes:function(){
+                        tr.remove();
+                        inform.splice(index,1);
+                        method();
+                        layer.closeAll();
+                    }
+                });
+            },
+            add:function(){
+                var str='<div style="padding:15px">'
+                        +'<form class="layui-form" action="">'
+                        +'<table class="layui-table"><colgroup><col width="100"><col><col width="100"></colgroup>'
+                        +'<tr><td>ID</td><td><input class="layui-input" type="text" name="id" /></td>'
+                        +'<td>标题</td><td><input class="layui-input" type="text" name="title" /></td></tr>'
+                        +'<tr><td>类型</td><td><input class="layui-input" type="text" name="type"/></td>'
+                        +'<td>状态</td><td><input class="layui-input" type="text" name="state" /></td></tr>'
+                        +'<tr><td>地址</td><td><input class="layui-input"  type="text" name="address" "/></td>'
+                        +'<td>权限编码</td><td><input class="layui-input" type="text" name="code" /></td></tr>'
+                        +'<tr><td >描述</td><td colspan="3"><input class="layui-input" type="text" name="disc" /></td></tr>'
+                        +'<tr><td colspan="4"><button type="button" class="layui-btn" lay-submit lay-filter="add">添加</button><button type="button" onclick="layer.closeAll()" class="layui-btn layui-btn-primary">关闭</button></td></tr>'
+                        +'</table></form></div>';
+                layer.open({
+                    type:1,
+                    title:['新增','color:#fff;font-size:20px'],
+                    shade:[0.6,'#FFF'],
+                    skin:'layui-layer-molv',
+                    area:'610px',
+                    content:str
+                })
+
+            }
+
+        };
+            $('.layui-table tbody tr').on('click','button',function(){
+                var othis = $(this), type = othis.data('type');
+                action[type] ? action[type].call(this, othis) : '';
+            });
+            $('#add').click(function() {
+                var othis = $(this), type = othis.data('type');
+                action[type] ? action[type].call(this, othis) : '';
+            });
+        };
+        method();
+        form.on('submit(add)', function(data){
+            var str={'id':data.field.id,'title':data.field.title,'type':data.field.type,'state':data.field.state,'addr':data.field.address,'code':data.field.code,'disc':data.field.disc}
+            inform.unshift(str);
+            method();
+            layer.closeAll();
+        });
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <style>
+        .content{
+            padding: 15px;
+        }
+        .mq-inline{
+            width: 94%;
+            margin: 0 auto;
+        }
+        .layui-layedit{
+            width: 94%;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .layui-form-item .layui-input-inline{
+            width: 49.5%;
+            margin-right: 0;
+        }
+        .layui-form-item .layui-input-inline:nth-child(2){
+            margin-left: 1%;
+        }
+        .layui-form-item .layui-input-inline .percent{
+            width: 32%;
+            float: left;
+        }
+        .layui-form-item .layui-input-inline .percent:nth-child(2){
+            margin: 0 2%;
+        }
+        .foot .layui-input-inline{
+            width: 33%;
+        }
+        .foot .layui-input-inline:last-child{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <div class="mq-inline">
+                <div class="layui-input-inline">
+                    <input type="text" name="title" required class="layui-input" placeholder="请输入标题"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="author" required class="layui-input" placeholder="请输入作者"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="mq-inline">
+                <div class="layui-input-inline">
+                        <div class="percent">
+                        <select name="province" lay-filter="province" lay-verify="required">
+                            <option value="">请选择省份</option>
+                        </select>
+                    </div>
+                    <div class="percent">
+                        <select name="city" lay-filter="city" lay-verify="required">
+                            <option value="">请选择市</option>
+                        </select>
+                    </div>
+                    <div class="percent">
+                        <select name="area" lay-filter="area" lay-verify="required">
+                            <option value="">请选择县/区</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                     <input type="text" name="author" required class="layui-input" placeholder="请输入详细地址"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <textarea name="" id="demo" cols="30" rows="10"></textarea>
+        </div>
+        <div class="layui-form-item foot">
+            <div class="mq-inline">
+                <div class="layui-input-inline">
+                    <label for=" " class="layui-form-label">开启评论</label>
+                    <input type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked/>
+                </div>
+                <div class="layui-input-inline">
+                    <label for=" " class="layui-form-label">是否订阅</label>
+                    <input type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked/>
+                </div>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn layui-btn-small layui-btn-warm">保存</button>
+                    <button type="button" class="layui-btn layui-btn-small layui-btn-normal">存为草稿</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="layui/layui.js"></script>
+<script src="js/area.js"></script>
+<script>
+    var areaData=Area;
+    var $form;
+    var form;
+    layui.use(['form','element','layedit'],function(){
+            var $=layui.jquery
+                ,element=layui.element()
+                ,layedit=layui.layedit;
+            layedit.build('demo'); //建立编辑器
+            form=layui.form();
+            $form=$('form');
+            loadProvince();
+    })
+        function loadProvince() {
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            }
+            //初始化省数据
+            $form.find('select[name=province]').append(proHtml);
+            form.render();
+            form.on('select(province)', function(data) {
+               //$form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>');
+                $form.find('select[name=city]').html('<option value="">请选择市</option>');
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().empty();
+                }
+            });
+        }
+        //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+           // $form.find('select[name=city]').html(cityHtml).parent().show();
+
+            $form.find('select[name=city]').append(cityHtml);
+            form.render();
+            form.on('select(city)', function(data) {
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadArea(citys[index].mallAreaList);
+                } else {
+                    $form.find('select[name=area]').parent().hide();
+                }
+            });
+        }
+        //加载县/区数据
+        function loadArea(areas) {
+            var areaHtml = '';
+            for (var i = 0; i < areas.length; i++) {
+                areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
+            }
+           // $form.find('select[name=area]').html(areaHtml).parent().show();
+            $form.find('select[name=area]').html('<option value="">请选择县/区</option>');
+            $form.find('select[name=area]').append(areaHtml);
+            form.render();
+            form.on('select(area)', function(data) {
+                //console.log(data);
+            });
+        }
+
+
+</script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+<section id="social">
+    <blockquote class="layui-elem-quote">
+        <form class="layui-form " action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">查询时间：</label>
+                    <div class="layui-input-inline">
+                        <input id="date_end" type="text" name="date"  autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})"/>
+                    </div>
+                    <div class="layui-input-inline">
+                        <button type="button" class="layui-btn">快速查询</button>
+                        <button type="button" class="layui-btn">清空</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </blockquote>
+    <table class="layui-table">
+        <colgroup>
+            <col width='300'>
+            <col width='300'>
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>大小</th>
+                <th>文件名</th>
+                <th>缩略图</th>
+                <th>上传时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="detail">
+                <td>12M</td>
+                <td>djflsjfl.png</td>
+                <td>
+                    <div id="photos_box">
+                        <img src="bs3.png" alt="麦当劳"/>
+                        <img src="tp.png" alt="风景"/>
+                    </div>
+                </td>
+                <td>2016-05-06 18:00:28</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="pages"></div>
+</section>
+</body>
+<script src="layui/layui.js"></script>
+<script>
+    layui.use(['layer','form','element','laypage','laydate'],function() {
+        var layer = layui.layer
+                , form = layui.form()
+                , element = layui.element()
+                , laypage=layui.laypage
+                , laydate=layui.laydate
+                , $ = layui.jquery;
+        laypage({
+            cont: 'pages'
+            ,pages: 5
+        });
+       $('#photos_box').click(function() {
+           layer.photos({
+               photos: '#photos_box',
+               anim: 5,
+               shade:[0.8, '#393D49']
+           })
+       });
+        var end = {
+            max: laydate.now()
+            ,istoday: false
+            ,istime: true
+            ,format: 'YYYY-MM-DD hh:mm:ss'
+            ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        document.getElementById('date_end').onclick = function(){
+            end.elem = this
+            laydate(end);
+        }
+    })
+</script>
+</html>

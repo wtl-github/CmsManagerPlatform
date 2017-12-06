@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgnbs.cms.dao.intf.SysLogDao">
+	<resultMap type="SysLog" id="sysLogResultMap">
+		<id column="id" property="id" />
+		<result column="userId" property="userId" />
+		<result column="optionDesc" property="optionDesc" />
+		<result column="optionIp" property="optionIp" />
+		<result column="optionMethod" property="optionMethod" />
+		<result column="optionTime" property="optionTime" />
+		<result column="parame" property="parame" />
+	</resultMap>
+
+	<insert id="insertSysLog" parameterType="SysLog"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_log
+		(userId,optionDesc,optionIp,optionMethod,optionTime,parame) values
+		(#{userId},#{optionDesc},#{optionIp},#{optionMethod},#{optionTime},#{parame})
+	</insert>
+
+</mapper>

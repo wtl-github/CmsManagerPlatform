@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sgnbs.cms.dao.intf.RegionDAO" >
+    
+  <sql id="Base_Column_List" >
+    region_id, region_name, region_address, region_description, region_acreage, region_delstatus, 
+    subdistrict_id, attachmentid
+  </sql>  
+    
+  <resultMap id="BaseResultMap" type="Region" >
+    <id column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="region_address" property="regionAddress" jdbcType="VARCHAR" />
+    <result column="region_description" property="regionDescription" jdbcType="VARCHAR" />
+    <result column="region_acreage" property="regionAcreage" jdbcType="INTEGER" />
+    <result column="region_delstatus" property="regionDelstatus" jdbcType="INTEGER" />
+    <result column="subdistrict_id" property="subdistrictId" jdbcType="VARCHAR" />
+    <result column="attachmentid" property="attachmentid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="listPageRegion" parameterType="Region" resultMap="BaseResultMap">
+  	select * from comm_region_info c where 1=1
+  	<if test="regionName != null and regionName != '' ">
+  	  	and c.region_name like "%"#{regionName}"%" 
+  	</if>
+  	and region_delstatus = 0
+  </select>
+  
+  <select id="getRegionMaxId" resultType="java.lang.String">
+      select max(region_id) from comm_region_info
+  </select>
+  
+  <select id="getRegionById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select * from comm_region_info c where 1 = 1
+  	and region_id = #{regionId}
+  </select>
+  
+  <insert id="insert" parameterType="Region" >
+    insert into comm_region_info (region_id, region_name, region_address, 
+      region_description, region_acreage, region_delstatus, 
+      subdistrict_id, attachmentid)
+    values (#{regionId}, #{regionName}, #{regionAddress}, 
+      #{regionDescription}, #{regionAcreage}, #{regionDelstatus}, 
+      #{subdistrictId}, #{attachmentid})
+  </insert>
+  
+  <update id="update" parameterType="Region" >
+    update comm_region_info
+    <set >
+      <if test="regionName != null and regionName != '' " >
+        region_name = #{regionName},
+      </if>
+      <if test="regionAddress != null and regionAddress != ''" >
+        region_address = #{regionAddress},
+      </if>
+      <if test="regionDescription != null and regionDescription != ''" >
+        region_description = #{regionDescription},
+      </if>
+      <if test="regionAcreage != null" >
+        region_acreage = #{regionAcreage},
+      </if>
+      <if test="regionDelstatus != null" >
+        region_delstatus = #{regionDelstatus},
+      </if>
+      <if test="subdistrictId != null and subdistrictId != ''" >
+        subdistrict_id = #{subdistrictId},
+      </if>
+      <if test="attachmentid != null and attachmentid != ''" >
+        attachmentid = #{attachmentid},
+      </if>
+    </set>
+    where region_id = #{regionId}
+  </update>
+  
+ <update id="delete" parameterType="Region" >
+    update comm_region_info
+    <set >
+      <if test="regionDelstatus != null" >
+        region_delstatus = #{regionDelstatus}
+      </if>
+    </set>
+    where region_id = #{regionId}
+  </update>
+  
+  
+ 
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from comm_region_info
+    where REGION_ID = #{regionId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="Region" >
+    insert into comm_region_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="regionId != null" >
+        REGION_ID,
+      </if>
+      <if test="regionName != null" >
+        REGION_NAME,
+      </if>
+      <if test="regionAddress != null" >
+        REGION_ADDRESS,
+      </if>
+      <if test="regionDescription != null" >
+        REGION_DESCRIPTION,
+      </if>
+      <if test="regionAcreage != null" >
+        REGION_ACREAGE,
+      </if>
+      <if test="regionDelstatus != null" >
+        REGION_DELSTATUS,
+      </if>
+      <if test="subdistrictId != null" >
+        SUBDISTRICT_ID,
+      </if>
+      <if test="attachmentid != null" >
+        attachmentID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="regionId != null" >
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionAddress != null" >
+        #{regionAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="regionDescription != null" >
+        #{regionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="regionAcreage != null" >
+        #{regionAcreage,jdbcType=INTEGER},
+      </if>
+      <if test="regionDelstatus != null" >
+        #{regionDelstatus,jdbcType=INTEGER},
+      </if>
+      <if test="subdistrictId != null" >
+        #{subdistrictId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentid != null" >
+        #{attachmentid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

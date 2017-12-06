@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgnbs.cms.dao.intf.CommunityDAO" >
+  <sql id="Base_Column_List" >
+    id, subdistrict_name, subdistrict_address, subdistrict_tel, delstatus, region_id, 
+    region_name
+  </sql>
+    
+  <resultMap id="BaseResultMap" type="Community" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="subdistrict_name" property="subdistrictName" jdbcType="VARCHAR" />
+    <result column="subdistrict_address" property="subdistrictAddress" jdbcType="VARCHAR" />
+    <result column="subdistrict_tel" property="subdistrictTel" jdbcType="VARCHAR" />
+    <result column="delstatus" property="delstatus" jdbcType="INTEGER" />
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="listPageCommunity" parameterType="Community" resultMap="BaseResultMap">
+  	select * from comm_subdistrict_info c where 1=1
+  	<if test="subdistrictName!=null and subdistrictName!=''">
+  	  	and c.subdistrict_name like "%"#{subdistrictName}"%" 
+  	</if>
+  	and delstatus = 0
+  </select>
+  
+   <select id="getCommunityById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   	select * from comm_subdistrict_info c where 1 = 1
+   	and id = #{id}
+   </select>
+  
+   <insert id="insert" parameterType="Community" >
+    insert into comm_subdistrict_info (id, subdistrict_name, subdistrict_address, 
+      subdistrict_tel, delstatus, region_id, 
+      region_name)
+    values (#{id}, #{subdistrictName}, #{subdistrictAddress}, 
+      #{subdistrictTel}, #{delstatus}, #{regionId}, 
+      #{regionName})
+   </insert>
+   <!-- 
+   <insert id="insert" parameterType="Community" >
+    insert into comm_subdistrict_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subdistrictName != null" >
+        subdistrict_name,
+      </if>
+      <if test="subdistrictAddress != null" >
+        subdistrict_address,
+      </if>
+      <if test="subdistrictTel != null" >
+        subdistrict_tel,
+      </if>
+      <if test="delstatus != null" >
+        delstatus,
+      </if>
+      <if test="regionId != null" >
+        region_id,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="subdistrictName != null" >
+        #{subdistrictName},
+      </if>
+      <if test="subdistrictAddress != null" >
+        #{subdistrictAddress},
+      </if>
+      <if test="subdistrictTel != null" >
+        #{subdistrictTel},
+      </if>
+      <if test="delstatus != null" >
+        #{delstatus},
+      </if>
+      <if test="regionId != null" >
+        #{regionId},
+      </if>
+      <if test="regionName != null" >
+        #{regionName},
+      </if>
+    </trim>
+   </insert>
+    -->
+   <update id="update" parameterType="Community" >
+    update comm_subdistrict_info
+    <set >
+      <if test="subdistrictName != null" >
+        subdistrict_name = #{subdistrictName},
+      </if>
+      <if test="subdistrictAddress != null" >
+        subdistrict_address = #{subdistrictAddress},
+      </if>
+      <if test="subdistrictTel != null" >
+        subdistrict_tel = #{subdistrictTel},
+      </if>
+      <if test="delstatus != null" >
+        delstatus = #{delstatus},
+      </if>
+      <if test="regionId != null" >
+        region_id = #{regionId},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName},
+      </if>
+    </set>
+    where id = #{id}
+   </update>
+   
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from comm_subdistrict_info
+    where ID = #{id}
+  </delete>
+ 
+</mapper>

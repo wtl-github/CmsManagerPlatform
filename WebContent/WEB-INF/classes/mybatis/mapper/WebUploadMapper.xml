@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgnbs.cms.dao.intf.WebUploadDao">
+	<resultMap type="WebUpload" id="webUploadResultMap">
+		<id column="uploadid" property="uploadId"/>
+		<result column="title" property="title"/>
+		<result column="des" property="des"/>
+		<result column="uploadurl" property="uploadUrl"/>
+		<result column="uploadname" property="uploadName"/>
+		<result column="systime" property="systime"/>
+		<result column="userid" property="userId"/>
+		<result column="type" property="type"/>
+		<result column="keyword" property="keyword"/>
+		<result column="state" property="state"/>
+		<result column="username" property="username"/>
+	</resultMap>
+	
+	<select id="listPageWebUploadByUserID" parameterType="WebUpload" resultMap="webUploadResultMap">
+		select * from fx_uploadfile s 
+		where s.state=0 
+		<if test="userId!=null and userId!=''">
+			and s.userid =#{userId}
+		</if>
+		order by s.systime desc
+	</select>
+	
+	<select id="listPageWebUpload" parameterType="WebUpload" resultMap="webUploadResultMap">
+		 select s.*,q.username from fx_uploadfile s 
+		 left join tb_user q on s.userid = q.user_id 
+		 where state=0 
+		 <if test="username!=null and username!=''">
+			and q.username like "%"#{username}"%" 
+		</if>
+		 <if test="title!=null and title!=''">
+			and s.title like "%"#{title}"%" 
+		</if>
+		<if test="keyword!=null and keyword!=''">
+			and s.keyword like "%"#{keyword}"%"
+		</if>
+		<if test="type!=null and type!=0">
+			and s.type like "%"#{type}"%"
+		</if>
+		<if test="start!=null">
+			and s.systime&gt;=#{start}
+		</if>
+		<if test="end!=null">
+			and s.systime&lt;=#{end}
+		</if>
+		    order by s.systime desc
+	</select>
+	
+	<insert id="insertWebUpload" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="uploadid">
+		insert into
+		fx_uploadfile(title,des,uploadurl,uploadname,systime,userid,type,keyword,state)
+		values
+		(#{title},#{des},#{uploadurl},#{uploadname},NOW(),#{userid},#{type},#{keyword},0)
+	</insert>
+	
+	<select id="getWebUploadByUploadId" parameterType="int" resultMap="webUploadResultMap" >
+		select * from fx_uploadfile where uploadid=#{uploadId}
+	</select>
+	
+	<update id="updateWebUploadStatus" parameterType="WebUpload" >
+		update fx_uploadfile set state =1 where uploadid=#{uploadId}
+	</update>
+	
+	<update id="updateWebUpload" parameterType="WebUpload" >
+		update fx_uploadfile set title=#{title},des=#{des},type=#{type},keyword=#{keyword} where uploadid=#{uploadId}
+	</update>
+</mapper>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <style>
+    section,#title,#main{
+        width: 1140px;
+        margin:0 auto;
+        overflow: hidden;
+    }
+    #title{
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        border-bottom:1px solid #aaaaaa;
+    }
+    #title h2{
+        margin:0 16px;
+        font-size: 16px;
+    }
+    #title .rt span{
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        background-color: #393D49;
+        border-radius: 3px;
+        color: #ffffff;
+    }
+    #title .rt span.point{
+        background-color: transparent;
+        color: #333333;
+        width: 8px;
+        height: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .card{
+        width: 546px;
+        height: 240px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.3);
+        margin: 16px 0 0 16px;
+    }
+    .lf{
+        float: left;
+    }
+    .rt{
+        float: right;
+        margin-right: 16px;
+    }
+    .state{
+        float: right;
+        height: 192px;
+        width: 176px;
+        background-color: #1E9FFF;
+        text-align: center;
+        padding:24px 0 ;
+        position: relative;
+    }
+    .text{
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform:translate(-50%,-50%);
+        color:#ffffff;
+        font-size: 18px;
+    }
+    .detail{
+        float: left;
+        width: 322px;
+        height: 192px;
+        padding: 24px;
+    }
+    .detail .top{
+        height: 140px;
+        border-bottom: 1px solid #dddddd;
+    }
+    .detail .top>img{
+        float: left;
+        width: 120px;
+        height: 120px;
+    }
+    .detail .top>p{
+        float: left;
+        margin-left: 16px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .info{
+        margin-top: 8px;
+    }
+    .btn{
+        width: 96px;
+        height: 32px;
+        font-weight: bold;
+        background-color:#ffffff;
+        border-radius: 20px;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.3);
+        margin-top: 10px;
+    }
+    .actBtn{
+        color: #01AAED;
+        border: 4px solid #01AAED;
+        cursor: pointer;
+    }
+    .disBtn{
+        color: #aaaaaa;
+        border: 4px solid #aaaaaa;
+        cursor:default;
+     }
+    </style>
+</head>
+<body>
+<section>
+    <div id="title">
+        <h2 class="lf">抢购中，先到先得哦</h2>
+        <h2 class="rt lxftime"></h2>
+    </div>
+    <ul id="main">
+        <li class="card lf">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+        <li class="card rt">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+        <li class="card lf">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+        <li class="card rt">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+        <li class="card lf">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+        <li class="card rt">
+            <div class="detail">
+                <div class="top">
+                    <img class="" src="bs3.png" alt=" "/>
+                    <p>产品名称</p>
+                </div>
+                <p class="info">产品简介产品简介产品简介产品简介产品简介产品简介产品简介</p>
+            </div>
+            <div class="state">
+                <div class="text">已抢</div>
+                <div class="progress"></div>
+                <button class="btn actBtn">立即抢购</button>
+            </div>
+        </li>
+    </ul>
+
+</section>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/radialIndicator.min.js"></script>
+<script>
+    $('.progress').radialIndicator({
+        radius:60,
+        barColor: '#ffffff',
+        barBgColor:'#01AAED',
+        fontColor:'#ffffff',
+        barWidth: 8,
+        initValue: 0,
+        roundCorner : true,
+        percentage: true
+    });
+    var len=$('.progress').length;
+    for(var i=0;i<len;i++){
+        var  radialObj=$('.progress').eq(i).data('radialIndicator');
+        var c=parseInt(Math.floor(Math.random()*101));
+        radialObj.animate(c);
+    }
+    function lxfEndtime(){
+        var endtime = new Date('3/13/2017 15:00:00').getTime();//取结束日期(毫秒值)
+        var nowtime = new Date().getTime();        //今天的日期(毫秒值)
+        var youtime = endtime-nowtime;//还有多久(毫秒值)
+        var seconds = youtime/1000;
+        var minutes = Math.floor(seconds/60);
+        var hours = Math.floor(minutes/60);
+        var days = Math.floor(hours/24);
+        var CDay= days*24 ;
+        var CHour= (hours % 24+CDay)<10?'0'+(hours % 24+CDay):hours % 24+CDay;
+        var CMinute= minutes % 60<10?'0'+minutes % 60:minutes % 60;
+        var CSecond= Math.floor(seconds %60)<10?'0'+Math.floor(seconds %60):Math.floor(seconds %60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数。
+        if(endtime<=nowtime){
+            $('.lxftime').html("抢购结束")//如果结束日期小于当前日期就提示过期啦
+            $('.btn').each(function(){$(this).addClass('disBtn').removeClass('actBtn')});
+        }else{
+            $('.lxftime').html("距结束<span>"+CHour+"</span><span class='point'>:</span><span>"+CMinute+"</span><span class='point'>:</span><span>"+CSecond+"</span>"); //输出没有天数的数据
+        };
+        setTimeout("lxfEndtime()",1000);
+    };
+    lxfEndtime();
+</script>
+</html>

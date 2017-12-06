@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <style>
+        #wrap{
+            width: 60%;
+            margin: 0 auto;
+            padding: 10px 15px;
+            background-color: #ffffff;
+            box-shadow: 0 0 5px 10px rgba(0,0,0,.3);
+            -webkit-box-shadow:0 0 5px 2px rgba(0,0,0,.3);
+            border-radius: 3px;
+            margin-top: 30px;
+        }
+
+        .layui-form-item .layui-input-inline{
+            margin-right: 0;
+        }
+    /*复选框方框样式*/
+    .layui-form-checkbox{
+        height: 22px;
+        line-height: 20px;
+        padding-right: 20px;
+        border-radius: 50%;
+    }
+        .layui-form-pane .layui-form-checkbox {
+          margin:10px;
+          margin-top: 5px;
+      }
+        .layui-form-checkbox span{
+            display: none;
+        }
+    /*复选框字体颜色*/
+    .layui-form-checked i, .layui-form-checked:hover i{
+    /*color: #11B5E5;*/
+    color:#ffffff;
+    }
+    /**/
+    .layui-form-checked, .layui-form-checked:hover {
+    /*border: 1px solid  #11B5E5;*/
+    background-color: #11B5E5;
+    }
+    /*复选框字体大小*/
+    .layui-form-checkbox i{
+    width: 30px;
+    font-size: 18px;
+    }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <form class="layui-form layui-form-pane"  action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改昵称</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入6-12位数字" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">修改手机</label>
+                <div class="layui-input-block" >
+                    <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
+                </div>
+        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">修改邮箱</label>
+                <div class="layui-input-block" >
+                    <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" autocomplete="off" class="layui-input">
+                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男">
+                <input type="radio" name="sex" value="女" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像设置</label>
+            <div class="layui-input-inline">
+                <input type="file" name="file" class="layui-upload-file"/>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">验证日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: right">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="layui/layui.js"></script>
+<script>
+    layui.use(['layer', 'form','element','laydate','upload'],function() {
+        var layer = layui.layer
+                    ,form = layui.form()
+                    , element = layui.element()
+                    , $ = layui.jquery;
+        layui.upload({
+            url: '' //上传接口
+            ,success: function(res){ //上传成功后的回调
+                console.log(res)
+            }
+        });
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

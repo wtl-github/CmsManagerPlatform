@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgnbs.cms.dao.intf.AttachmentDAO">
+    	<resultMap type="attachment" id="attachmentResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="url" property="name"/>
+		<result column="showurl" property="showUrl"/>
+	</resultMap>
+
+	<select id="getAttachmentById" resultType="attachment"
+		parameterType="String">
+		select * from sys_attachment where ID=#{attId}
+	</select>
+
+	<select id="getAttachmentByIds" resultType="attachment">
+		select * from sys_attachment where id in
+		<foreach collection="list" item="id" index="index" open="("
+			close=")" separator=",">
+			#{id}
+		</foreach>
+		order by id desc
+	</select>
+
+	<insert id="insertAttachment" parameterType="attachment" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		sys_attachment(name,url,showurl)
+		values
+		(#{name},#{url},#{showUrl})
+	</insert>
+
+</mapper>

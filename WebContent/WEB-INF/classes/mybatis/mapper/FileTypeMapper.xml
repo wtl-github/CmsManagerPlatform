@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sgnbs.cms.dao.intf.FileTypeDao">
+	<resultMap type="FileType" id="fileTypeResultMap">
+		<id column="id" property="id"/>
+		<result column="typecode" property="typeCode"/>
+		<result column="supercode" property="superCode"/>
+		<result column="typename" property="typeName"/>
+		<result column="level" property="level"/>
+	</resultMap>
+	
+	<select id="getTypelist" parameterType="java.util.Map" resultMap="fileTypeResultMap">
+		select * from fx_filetype
+	    where 1=1
+        <if test="typecode != null and typecode  !=''">
+            and typecode=#{typecode}
+        </if>
+        <if test="level != null and level  !=''">
+            and level=#{level}
+        </if>
+	</select>
+	
+	<select id="getSubTypelist" parameterType="java.util.Map" resultMap="fileTypeResultMap">
+		select * from fx_filetype
+	    where 1=1
+        <if test="typecode != null and typecode  !=''">
+            and supercode=#{typecode}
+        </if>
+        <if test="level != null and level  !=''">
+            and level=#{level}
+        </if>
+	</select>
+	
+	<select id="getTypeSuper" parameterType="java.util.Map" resultMap="fileTypeResultMap">
+		select * from fx_filetype  where 1=1
+		<if test="typecode != null and typecode  !=''">
+            and typecode=#{typecode}
+        </if>
+	</select>
+</mapper>

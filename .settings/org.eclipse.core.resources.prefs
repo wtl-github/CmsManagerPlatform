@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//WebContent/css/style.css=UTF-8
+encoding//WebContent/jsp/index.jsp=UTF-8
+encoding//WebContent/jsp/person.jsp=UTF-8
+encoding//WebContent/jsp/public_info.jsp=UTF-8
+encoding//conf/config.properties=UTF-8
+encoding//conf/jdbc.properties=UTF-8
+encoding//conf/log4j.properties=UTF-8
+encoding//src/com/sgnbs/cms/dao/intf/AttachmentDAO.java=UTF-8
+encoding//src/com/sgnbs/cms/util/DateTools.java=UTF-8
+encoding//src/com/sgnbs/cms/util/upload/UploadUtil.java=UTF-8
+encoding/<project>=UTF-8
